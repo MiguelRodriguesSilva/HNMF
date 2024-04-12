@@ -1,7 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq.Expressions;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
@@ -46,5 +44,19 @@ public class PlayerMove : MonoBehaviour
         {
             transform.eulerAngles = new Vector3(0f, 180f, 0f);
         }
+    }
+
+    public void KnockBack(Vector2 direction)
+    {
+        StartCoroutine(KB(direction));
+    }
+
+    IEnumerator KB(Vector2 dir)
+    {
+        podeMover = false;
+        rb.velocity = Vector2.zero;
+        rb.AddForce(dir * new Vector2(1, 0.1f) * 5f, ForceMode2D.Impulse);
+        yield return new WaitForSeconds(0.3f);
+        podeMover = true;
     }
 }
